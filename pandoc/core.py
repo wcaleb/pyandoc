@@ -25,17 +25,22 @@ class Document(object):
 		self._content = None
 		self._format = None
 		self._register_formats()
+		self.arguments = []
 
         def bib(self, bibfile):
                 if not exists(bibfile):
-                        raise IOError("Bib file not found: "+bibfile)
-                self.bibfile = bibfile
+                        raise IOError("Bib file not found: " + bibfile)
+		self.add_argument("bibliography=%s" % bibfile)
 
         def csl(self, cslfile):
                 if not exists(cslfile):
-                        raise IOError("Bib file not found: "+cslfile)
-		self.cslfile = cslfile
-		
+                        raise IOError("CSL file not found: " + cslfile)
+		self.add_argument("csl=%s" % cslfile)
+
+	def add_argument(self, arg):
+                self.arguments.append("--%s" % arg)
+                return self.arguments
+        
 	@classmethod
 	def _register_formats(cls):
 		"""Adds format properties."""
@@ -52,12 +57,8 @@ class Document(object):
 	
 	def _output(self, format):
                 subprocess_arguments = [PANDOC_PATH, '--from=%s' % self._format, '--to=%s' % format]
-                
-                if hasattr(self, "bibfile"):                       
-                        subprocess_arguments.append('--bibliography=%s' % self.bibfile)
-                if hasattr(self, "cslfile"):
-                        subprocess_arguments.append('--csl=%s' % self.cslfile)
-                
+                subprocess_arguments.extend(self.arguments)
+                print subprocess_arguments
                 p = subprocess.Popen(
                         subprocess_arguments,
                         stdin=subprocess.PIPE, 
