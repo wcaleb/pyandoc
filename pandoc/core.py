@@ -1,7 +1,7 @@
 import subprocess
+from os.path import exists
 
-PANDOC_PATH = '/Users/kreitz/.cabal/bin//pandoc'
-
+PANDOC_PATH = r'C:\Program Files (x86)\Pandoc\bin\pandoc.exe'
 
 class Document(object):
 	"""A formatted document."""
@@ -25,7 +25,17 @@ class Document(object):
 		self._content = None
 		self._format = None
 		self._register_formats()
-			
+
+        def bib(self, bibfile):
+                if not exists(bibfile):
+                        raise IOError("Bib file not found: "+bibfile)
+                self.bibfile = bibfile
+
+        def csl(self, cslfile):
+                if not exists(cslfile):
+                        raise IOError("Bib file not found: "+cslfile)
+		self.cslfile = cslfile
+		
 	@classmethod
 	def _register_formats(cls):
 		"""Adds format properties."""
@@ -41,11 +51,17 @@ class Document(object):
 		self._format = format
 	
 	def _output(self, format):
-		# print format
-		p = subprocess.Popen(
-			[PANDOC_PATH, '--from=%s' % self._format, '--to=%s' % format],
-			stdin=subprocess.PIPE, 
-			stdout=subprocess.PIPE
-		)
+                subprocess_arguments = [PANDOC_PATH, '--from=%s' % self._format, '--to=%s' % format]
+                
+                if hasattr(self, "bibfile"):                       
+                        subprocess_arguments.append('--bibliography=%s' % self.bibfile)
+                if hasattr(self, "cslfile"):
+                        subprocess_arguments.append('--csl=%s' % self.cslfile)
+                
+                p = subprocess.Popen(
+                        subprocess_arguments,
+                        stdin=subprocess.PIPE, 
+                        stdout=subprocess.PIPE
+                )
 
 		return p.communicate(self._content)[0]
