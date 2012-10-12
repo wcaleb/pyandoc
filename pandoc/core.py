@@ -36,6 +36,11 @@ class Document(object):
                 if not exists(cslfile):
                         raise IOError("CSL file not found: " + cslfile)
 		self.add_argument("csl=%s" % cslfile)
+
+        def abbr(self, abbrfile):
+                if not exists(abbrfile):
+                        raise IOError("Abbreviations file not found: " + abbrfile)
+		self.add_argument("citation-abbreviations=%s" % abbrfile)
         
 	def add_argument(self, arg):
                 self.arguments.append("--%s" % arg)
