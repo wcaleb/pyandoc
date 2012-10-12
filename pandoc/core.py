@@ -36,7 +36,7 @@ class Document(object):
                 if not exists(cslfile):
                         raise IOError("CSL file not found: " + cslfile)
 		self.add_argument("csl=%s" % cslfile)
-
+        
 	def add_argument(self, arg):
                 self.arguments.append("--%s" % arg)
                 return self.arguments
@@ -58,7 +58,7 @@ class Document(object):
 	def _output(self, format):
                 subprocess_arguments = [PANDOC_PATH, '--from=%s' % self._format, '--to=%s' % format]
                 subprocess_arguments.extend(self.arguments)
-                print subprocess_arguments
+
                 p = subprocess.Popen(
                         subprocess_arguments,
                         stdin=subprocess.PIPE, 
