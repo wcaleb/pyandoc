@@ -12,7 +12,7 @@ I wanted to use *Pandoc* for parsing *Markdown* files with *citations*.
 Pandoc supports that by giving a *--bibliography=FILE* command-line argument with a bibliography file (like *.bib*).
 See the [Pandoc documentation](http://johnmacfarlane.net/pandoc/README.html#citations) for more details on that.
 
-Byt *pyandoc* did not support that. So I changed it.
+But *pyandoc* did not support that. So I changed it.
 
   - Added and *add_argument* method to the *Document* class where you can give any argument listed in the *Pandoc* documentation.
   For example, want a Table of Contents? Do *add_argument("toc")*. 
