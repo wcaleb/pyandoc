@@ -7,13 +7,13 @@ import sys
 from setuptools import setup
 
 
-def publish():
-	"""Publish to PyPi"""
-	os.system("python setup.py sdist upload")
+#def publish():
+#	"""Publish to PyPi"""
+#	os.system("python setup.py sdist upload")
 
-if sys.argv[-1] == "publish":
-	publish()
-	sys.exit()
+#if sys.argv[-1] == "publish":
+#	publish()
+#	sys.exit()
 
 required = []
 
@@ -22,13 +22,13 @@ required = []
 
 setup(
 	name='pyandoc',
-	version='0.0.1',
+	version='0.0.1a',
 	description='Python wrapper for Pandoc - the universal document converter',
-	long_description=open('README.rst').read() + '\n\n' +
-	                 open('HISTORY.rst').read(),
-	author='Kenneth Reitz',
-	author_email='me@kennethreitz.com',
-	url='http://github.com/kennethreitz/pyandoc',
+	#long_description=open('README.rst').read() + '\n\n' +
+	#                 open('HISTORY.rst').read(),
+	author='Yoav Ram',
+	author_email='yoavram@gmail.com',
+	url='http://github.com/yoavram/pyandoc',
 	packages= [
 		'pandoc',
 	],
