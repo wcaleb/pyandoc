@@ -22,7 +22,7 @@ required = []
 
 setup(
 	name='pyandoc',
-	version='0.0.1a',
+	version='0.0.1b',
 	description='Python wrapper for Pandoc - the universal document converter',
 	#long_description=open('README.rst').read() + '\n\n' +
 	#                 open('HISTORY.rst').read(),
