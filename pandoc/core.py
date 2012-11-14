@@ -13,12 +13,13 @@ class Document(object):
         'rst+lhs', 'html', 'latex', 'latex+lhs'
     )
     
+    # removed pdf and epub which cannot be handled by stdout
     OUTPUT_FORMATS = (
         'native', 'html', 'html+lhs', 's5', 'slidy', 
-        'docbook', 'opendocument', 'odt', 'epub', 
+        'docbook', 'opendocument', 'odt',
         'latex', 'latex+lhs', 'context', 'texinfo', 
         'man', 'markdown', 'markdown+lhs', 'plain', 
-        'rst', 'rst+lhs', 'mediawiki', 'rtf', 'pdf'
+        'rst', 'rst+lhs', 'mediawiki', 'rtf'
     )
 
     # TODO: Add odt, epub formats (requires file access, not stdout)
@@ -80,7 +81,10 @@ class Document(object):
         return p.communicate(self._content)[0]
 
 
-    def to_pdf(self, output_filename):
+    def to_file(self, output_filename):
+        '''handles pdf and epub format. 
+        Inpute: output_filename should have the proper extension.
+        Output: The name of the file created, or an IOError if failed'''
         temp_file = NamedTemporaryFile(mode="w", suffix=".md", delete=False)
         temp_file.write(self._content)
         temp_file.close()
@@ -88,8 +92,6 @@ class Document(object):
         subprocess_arguments = [PANDOC_PATH, temp_file.name, '-o %s' % output_filename]
         subprocess_arguments.extend(self.arguments)      
         cmd = " ".join(subprocess_arguments) 
-
-        #print "****", cmd, "*****"
 
         fin = os.popen(cmd)
         msg = fin.read()
@@ -102,4 +104,4 @@ class Document(object):
         if exists(output_filename):
             return output_filename
         else:
-            raise IOError("Failed creating PDF file: %s" % output_filename)
+            raise IOError("Failed creating file: %s" % output_filename)
