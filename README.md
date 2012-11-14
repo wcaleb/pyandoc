@@ -6,7 +6,7 @@ The original project statement is: *Pyandoc: a simple Pandoc wrapper for Python*
 
 ## Changes
 
-### Big
+### Citations in Markdown
 
 I wanted to use *Pandoc* for parsing *Markdown* files with *citations*.
 Pandoc supports that by giving a *--bibliography=FILE* command-line argument with a bibliography file (like *.bib*).
@@ -19,11 +19,22 @@ But *pyandoc* did not support that. So I changed it.
   - Added an *bib(bibfile)* method. This method will check that the file given exists and will pass it to the arguments with the *bibliography=* prefix.
   - Same for *csl(cslfile)* for specifing an *CSL* file.
 
-### Small
+### PDF and EPUB output
+
+I wanted to output PDF files with Pandoc, but *pyandoc* outputs to the stdout, 
+and PDFs are generated in Pandoc using LaTeX and therefore must be output to file.
+So I wrote a new method in *pyandoc.Document* called *to_file*. 
+The method accepts an output filename (with extention that Pandoc knows, such as *pdf* or *epub*).
+I tested it with PDF and EPUB but it should work for other formats as well. The method works with the
+*bib* and all the other stuff mentioned above.
+
+### Small changes
 
 The original project had the path to the *pandoc* executable hardcoded, and you were supposed to change it after import.
 But that didn't work for me (got an error - see [issue](https://github.com/kennethreitz/pyandoc/issues/5)).
-So I changed the hardcoded path, it is in the file *core.py* at the top.
+So I changed the hardcoded path, it is in the file *core.py* at the top. 
+It is now simply *pandoc* so you can either change it via *pyandoc.PANDOC_PATH* or just
+put *pandoc* in your path. This solution should work for both Windows and Linux users.
 
 
 ## Other details
