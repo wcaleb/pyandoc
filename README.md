@@ -7,7 +7,7 @@ The original project statement is: *Pyandoc: a simple Pandoc wrapper for Python*
 ## Citations in Markdown
 
 I wanted to use *Pandoc* for parsing *Markdown* files with *citations*.
-Pandoc supports that by giving a *--bibliography=FILE* command-line argument with a bibliography file (like *.bib*).
+Pandoc supports that by giving a `--bibliography=FILE` command-line argument with a bibliography file (like `.bib`).
 See the [Pandoc documentation](http://johnmacfarlane.net/pandoc/README.html#citations) for more details on that.
 
 But *pyandoc* did not support that. So I changed it.
